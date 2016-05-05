@@ -92,7 +92,7 @@ function spliceWithArray<T>(adm: IObservableArrayAdministration<T>, index: numbe
 
 	if (arguments.length === 2)
 		deleteCount = length - index;
-	else if (deleteCount === undefined || deleteCount === null)
+	else if (deleteCount === undefined || deleteCount === null) // || deleteCount < 0)
 		deleteCount = 0;
 	else
 		deleteCount = Math.max(0, Math.min(deleteCount, length - index));
@@ -104,7 +104,22 @@ function spliceWithArray<T>(adm: IObservableArrayAdministration<T>, index: numbe
 
 	const lengthDelta = newItems.length - deleteCount;
 	updateArrayLength(adm, length, lengthDelta); // create or remove new entries
-	const res: T[] = adm.values.splice(index, deleteCount, ...newItems);
+	let res: T[];
+
+	// replace?
+	if (deleteCount === length) {
+		res = adm.values;
+		adm.values = newItems;
+	} else if (deleteCount === 0) {
+		res = EMPTY_ARRAY;
+		if (index === length)
+			
+	} else {
+		res = adm.values.slice(index, deleteCount);
+	}
+	
+	
+sdf	adm.values = adm.values.slice(0, index).concat(newItems, adm.values.slice(index + deleteCount));
 
 	notifyArraySplice(adm, index, res, newItems);
 	return res;

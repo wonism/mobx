@@ -163,6 +163,7 @@ export function quickDiff<T>(current: T[], base: T[]): [T[], T[]] {
 
 		if (!currentExhausted && current[currentSearch] === base[baseIndex]) {
 			// items where added
+			// TODO: lots of trashingm reserve array upfront?
 			added = added.concat(current.slice(currentIndex, currentSearch));
 			currentIndex = currentSearch + 1;
 			baseIndex ++;
@@ -170,6 +171,7 @@ export function quickDiff<T>(current: T[], base: T[]): [T[], T[]] {
 		}
 		else if (!baseExhausted && base[baseSearch] === current[currentIndex]) {
 			// items where removed
+			// TODO: lots of trashingm reserve array upfront?
 			removed = removed.concat(base.slice(baseIndex, baseSearch));
 			baseIndex = baseSearch + 1;
 			currentIndex ++;

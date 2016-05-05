@@ -303,3 +303,50 @@ test('react to sort changes', function(t) {
     t.deepEqual(sorted, [1,2,3]);
     t.end();
 })
+
+
+test('large collection, #236 - 1', t => {
+	var a = [];
+	
+	// exceeds max call stack size
+	for (var i = 0; i < 200000; i++)
+		a.push(i);
+	
+	var b = mobx.observable([]);
+	b.replace(a);
+	
+	t.end();
+});
+
+test('large collection, #236 - 2', t => {
+	// var a = mobx.observable([]);
+	// var sortColumn = mobx.observable(0);
+
+    // todo: shouldn't die with out of range error..	
+	// for(var i = 0; i < 20000; i++)
+	// 	a.push([Math.random(), Math.random()]);
+
+	// var sortFunc = (a, b) => {
+	// 	return (
+	// 		a[sortColumn.get()] < b[sortColumn.get()] 
+	// 			? -1
+	// 			: a[sortColumn.get()] > b[sortColumn.get()]
+	// 				? 1
+	// 				: 0
+	// 	); 
+	// }
+
+	// var sorted = mobx.computed(() => {
+	// 	return a.slice().sort(sortFunc);
+	// });
+	
+	// var ar = mobx.autorun(() => {
+	// 	sorted.get();
+	// });
+	
+	// a.push(42);
+	// sortColumn.set(1);
+	// ar();
+		
+	t.end();
+});
