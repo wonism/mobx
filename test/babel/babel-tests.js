@@ -1,6 +1,6 @@
 import {
     observable, computed, transaction, asStructure, autorun, extendObservable, action,
-	isObservableObject, observe, isObservable, spy, isAction,
+	isObservableObject, observe, isObservable, spy, isAction, useStrict,
     default as mobx
 } from "../";
 
@@ -687,4 +687,22 @@ test("379, inheritable actions - 2 (babel)", t => {
 	t.equal(isAction(c.method), true)
 
 	t.end()
+})
+
+test("338, @action on constructors", t => {
+	useStrict(true);
+
+	@action class A {
+		@observable a = 1;
+
+		constructor() {
+			this.a = 2;
+		}
+	}
+
+	const a = new A();
+	t.equal(a.a, 2);
+
+	useStrict(false);
+	t.end();
 })

@@ -416,7 +416,7 @@ Object.defineProperty(ObservableArray.prototype, "length", {
 });
 
 function createArrayBufferItem(index: number) {
-	Object.defineProperty(ObservableArray.prototype, "" + index, {
+	Object.defineProperty(ObservableArray.prototype, index as any, {
 		enumerable: false,
 		configurable: false,
 		set: createArraySetter(index),

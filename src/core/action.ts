@@ -78,7 +78,7 @@ export function actionImplementation(actionName: string, fn: Function): Function
 	invariant(typeof fn === "function", "`action` can only be invoked on functions");
 	invariant(typeof actionName === "string" && actionName.length > 0, `actions should have valid names, got: '${actionName}'`);
 	const res = function () {
-		return executeWrapped(actionName, fn, this, arguments);
+		return executeWrapped.call(this, actionName, fn, this, arguments);
 	};
 	(res as any).isMobxAction = true;
 	return res;

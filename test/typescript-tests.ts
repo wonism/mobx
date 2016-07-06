@@ -906,3 +906,21 @@ test("379, inheritable actions - 2 (typescript)", t => {
 
 	t.end()
 })
+
+test("338, @action on constructors (typescript)", t => {
+	useStrict(true);
+
+	@action class A {
+		@observable a = 1;
+
+		constructor() {
+			this.a = 2;
+		}
+	}
+
+	const a = new A();
+	t.equal(a.a, 2);
+
+	useStrict(false);
+	t.end();
+})
